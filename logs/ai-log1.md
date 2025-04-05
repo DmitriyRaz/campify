@@ -101,7 +101,7 @@ This project implements a Domain-Scoped Vertical Slice Architecture (DSVSA), com
 
 ### Prerequisites
 - Node.js 18.x+
-- npm or pnpm
+- npm or pnpm 
 - Supabase account
 - Vercel account (for deployment)
 
@@ -109,7 +109,7 @@ This project implements a Domain-Scoped Vertical Slice Architecture (DSVSA), com
 1. Clone the repository
 2. Install dependencies: `npm install`
 3. Set up environment variables in `.env.local`
-4. Run development server: `npm run dev`
+4. Run development server: `npm run dev` 
 
 ### Branch Strategy
 - `master`: Production-ready code

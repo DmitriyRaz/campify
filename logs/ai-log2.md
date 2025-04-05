@@ -82,7 +82,7 @@ Added scripts for manual linting and formatting:
 npm uninstall husky lint-staged
 ```
 
----
+--- 
 
 ## Summary
 

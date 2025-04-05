@@ -27,7 +27,7 @@ Today we focused on implementing the login component for the Authentication doma
 ### 4. Design Alignment
 - Made several adjustments to match the provided design mockups
 - Refined spacing, colors, and component sizing
-- Ensured responsive layout for mobile devices
+- Ensured responsive layout for mobile devices 
 
 ## Technical Considerations
 - Followed Domain-Scoped Vertical Slice Architecture principles
