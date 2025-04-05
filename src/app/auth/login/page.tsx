@@ -1,12 +1,6 @@
-// app/auth/login/page.tsx
-'use client';
+// src/app/auth/onboarding/page.tsx
+import AuthContainer from '@/domains/auth/components/AuthContainer';
 
-import { LoginForm } from '@/domains/auth/components';
-
-export default function LoginPage() {
-  return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 p-4">
-      <LoginForm />
-    </div>
-  );
+export default function OnboardingPage() {
+  return <AuthContainer />;
 }
