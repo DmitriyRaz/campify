@@ -20,7 +20,7 @@ File strucutre:
         /store (state managment)
         /tests (all our tests)
 
-### Front end Components - this comes from spec sheet
+### Front end Components - this comes from spec sheet ////////////////////// you are here ///////////////////////
 - Create base components in `src/domains/auth/components`:
   - `LoginForm.tsx`: Email/password login form
   - `RegisterForm.tsx`: New user registration
