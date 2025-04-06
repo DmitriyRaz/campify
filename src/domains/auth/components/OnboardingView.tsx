@@ -44,7 +44,7 @@ const OnboardingView: React.FC<OnboardingViewProps> = ({
       </div>
 
       {/* Content container */}
-      <div className="relative flex flex-col justify-between min-h-screen w-full max-w-[393px] p-0">
+      <div className="relative flex flex-col justify-between min-h-screen w-full max-w-[393px] px-5 py-0">
         {/* Header with logo */}
         <header className="mt-8">
           <div

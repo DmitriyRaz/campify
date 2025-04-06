@@ -56,7 +56,13 @@ const AuthContainer: React.FC = () => {
           className={`fixed inset-x-0 bottom-0 z-10 transition-transform duration-300 ease-in-out transform ${
             activeForm === 'login' ? 'translate-y-0' : 'translate-y-full'
           }`}
-          style={{ maxHeight: '95vh', overflowY: 'auto' }}
+          style={{
+            height: '90vh',
+            maxHeight: '90vh',
+            overflowY: 'auto',
+            borderTopLeftRadius: '24px',
+            borderTopRightRadius: '24px',
+          }}
           aria-hidden={activeForm !== 'login'}
         >
           <LoginForm
@@ -72,7 +78,13 @@ const AuthContainer: React.FC = () => {
           className={`fixed inset-x-0 bottom-0 z-10 transition-transform duration-300 ease-in-out transform ${
             activeForm === 'signup' ? 'translate-y-0' : 'translate-y-full'
           }`}
-          style={{ maxHeight: '95vh', overflowY: 'auto' }}
+          style={{
+            height: '90vh',
+            maxHeight: '90vh',
+            overflowY: 'auto',
+            borderTopLeftRadius: '24px',
+            borderTopRightRadius: '24px',
+          }}
           aria-hidden={activeForm !== 'signup'}
         >
           <SignUpForm
