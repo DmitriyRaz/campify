@@ -28,6 +28,10 @@ File strucutre:
   - `AuthCard.tsx`: Container for auth forms
 - Create shared component (so things that will be repeated)
 - Rendering strategy will be CSR (this is a dashbaord)
+- Outstanding:
+    - Fix all layout issues
+    - Remain OnboardingView to MobileView
+    - Make sure it works on all screens
 
 ### Set up DB
   - Create all db tables we need for this domain

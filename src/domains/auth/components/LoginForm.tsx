@@ -48,7 +48,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onClose, onSignUpClick }) => {
       )}
 
       {/* Login form content */}
-      <section className="flex flex-col gap-10 justify-center items-start p-10 max-w-none w-[600px] max-md:p-8 max-md:w-full max-md:max-w-[600px] max-md:rounded-[32px] max-sm:p-6 max-sm:max-w-screen-sm max-sm:rounded-3xl">
+      <section className="flex flex-col gap-10 justify-center items-start p-10 max-w-none w-[600px] max-h-[90vh] overflow-y-auto max-md:p-8 max-md:w-full max-md:max-w-[600px] max-md:rounded-[32px] max-sm:p-6 max-sm:max-w-screen-sm max-sm:rounded-3xl">
         {/* Logo Section */}
         <header className="flex flex-col gap-5 justify-center items-center self-stretch">
           <div className="h-10 w-[150px]" aria-label="Company Logo">
