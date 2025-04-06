@@ -54,3 +54,6 @@ File strucutre:
 
 ### Unit Testing (at domain level)
   - E2E, etc. Last testing we do
+  - Concurrent connections
+  - Stress testing
+  - Layout 
