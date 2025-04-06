@@ -45,7 +45,9 @@ const AuthContainer: React.FC = () => {
   if (isMobile) {
     return (
       <main
-        className="flex flex-col justify-center items-center w-full min-h-screen bg-neutral-900 relative overflow-hidden"
+        className={`flex flex-col justify-center items-center w-full h-[100svh] bg-neutral-900 relative ${
+          activeForm !== 'none' ? 'overflow-hidden' : 'overflow-auto'
+        }`}
         role="main"
       >
         {/* Onboarding View (always visible on mobile) */}
@@ -57,8 +59,7 @@ const AuthContainer: React.FC = () => {
             activeForm === 'login' ? 'translate-y-0' : 'translate-y-full'
           }`}
           style={{
-            height: '90vh',
-            maxHeight: '90vh',
+            maxHeight: '80vh',
             overflowY: 'auto',
             borderTopLeftRadius: '24px',
             borderTopRightRadius: '24px',
@@ -79,8 +80,7 @@ const AuthContainer: React.FC = () => {
             activeForm === 'signup' ? 'translate-y-0' : 'translate-y-full'
           }`}
           style={{
-            height: '90vh',
-            maxHeight: '90vh',
+            maxHeight: '80vh',
             overflowY: 'auto',
             borderTopLeftRadius: '24px',
             borderTopRightRadius: '24px',
@@ -98,7 +98,7 @@ const AuthContainer: React.FC = () => {
         {/* Blurred backdrop overlay when a form is active */}
         {activeForm !== 'none' && (
           <div
-            className="fixed inset-0 backdrop-blur-sm bg-black/30 z-5 transition-all duration-300"
+            className="fixed inset-0 backdrop-blur-sm bg-black/30 z-5 transition-opacity duration-300"
             onClick={handleCloseForm}
             aria-hidden="true"
           />

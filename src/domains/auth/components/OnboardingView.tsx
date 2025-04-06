@@ -2,7 +2,6 @@
 'use client';
 
 import React from 'react';
-//import Link from 'next/link';
 import Image from 'next/image';
 
 // Update the interface
@@ -10,8 +9,8 @@ interface OnboardingViewProps {
   backgroundImageUrl?: string;
   currentStep?: number;
   totalSteps?: number;
-  onSignInClick?: () => void;  // Add this line
-  onSignUpClick?: () => void;  // Add this line
+  onSignInClick?: () => void;
+  onSignUpClick?: () => void;
 }
 
 const OnboardingView: React.FC<OnboardingViewProps> = ({
@@ -21,10 +20,9 @@ const OnboardingView: React.FC<OnboardingViewProps> = ({
   onSignInClick,
   onSignUpClick,
 }) => {
-
   return (
     <main
-      className="flex flex-col justify-center items-center w-full min-h-screen bg-neutral-900 relative"
+      className="flex flex-col w-full h-[100svh] bg-neutral-900 relative overflow-hidden"
       role="main"
     >
       {/* Full-height background image container */}
@@ -43,10 +41,10 @@ const OnboardingView: React.FC<OnboardingViewProps> = ({
         </div>
       </div>
 
-      {/* Content container */}
-      <div className="relative flex flex-col justify-between min-h-screen w-full max-w-[393px] px-5 py-0">
+      {/* Content container - using flexbox for proper distribution */}
+      <div className="relative flex flex-col justify-between w-full h-full px-5 py-0">
         {/* Header with logo */}
-        <header className="mt-8">
+        <header className="pt-6">
           <div
             className="w-[119px] h-[32px] bg-neutral-800 flex items-center justify-center text-white text-xs"
             role="img"
@@ -56,10 +54,10 @@ const OnboardingView: React.FC<OnboardingViewProps> = ({
           </div>
         </header>
 
-        {/* Main content section */}
-        <div className="flex flex-col">
+        {/* Main content section - will take available space */}
+        <div className="flex-1 flex flex-col justify-center">
           {/* Welcome content */}
-          <section className="flex flex-col gap-5 justify-center items-start w-full mb-5">
+          <section className="flex flex-col gap-4 justify-center items-start w-full">
             <div className="flex flex-col gap-3 items-start w-full">
               <h1 className="w-full text-2xl font-bold leading-8 text-white">
                 Welcome to Your Sales Marketing Dashboard
@@ -70,9 +68,12 @@ const OnboardingView: React.FC<OnboardingViewProps> = ({
               </p>
             </div>
           </section>
+        </div>
 
+        {/* Bottom section - fixed to bottom */}
+        <div className="mb-8">
           {/* Pagination indicators */}
-          <div className="flex gap-1 items-center mb-10" role="navigation" aria-label="Pagination">
+          <div className="flex gap-1 items-center mb-6" role="navigation" aria-label="Pagination">
             {Array.from({ length: totalSteps }).map((_, index) => (
               <div
                 key={index}
@@ -86,7 +87,7 @@ const OnboardingView: React.FC<OnboardingViewProps> = ({
           </div>
 
           {/* Auth actions */}
-          <section className="flex flex-col gap-5 justify-center items-center w-full mb-10">
+          <section className="flex flex-col gap-4 justify-center items-center w-full">
             <button
               className="flex justify-center items-center gap-1 px-3 py-2 w-full h-10 text-base font-bold leading-5 text-white bg-orange-500 cursor-pointer rounded-[999px] hover:bg-orange-600 transition-colors focus:outline-none focus:ring-2 focus:ring-orange-300"
               onClick={onSignInClick}
