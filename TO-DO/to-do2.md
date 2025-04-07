@@ -29,9 +29,10 @@ File strucutre:
 - Create shared component (so things that will be repeated)
 - Rendering strategy will be CSR (this is a dashbaord)
 - Outstanding:
-    - Fix all layout issues
-    - Remain OnboardingView to MobileView
-    - Make sure it works on all screens
+    - Refactor auth components
+    - Set up orchestrating auth component
+    - export to page in app router
+    - make sure everything runs smoothly, looks good, then you can start db schema
 
 ### Set up DB
   - Create all db tables we need for this domain
