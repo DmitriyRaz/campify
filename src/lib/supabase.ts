@@ -40,21 +40,21 @@ export type Database = {
           id: string;
           user_id: string;
           question_id: string;
-          response_value: any;
+          response_value: unknown;
           created_at: string;
         };
         Insert: {
           id?: string;
           user_id: string;
           question_id: string;
-          response_value?: any;
+          response_value?: unknown;
           created_at?: string;
         };
         Update: {
           id?: string;
           user_id?: string;
           question_id?: string;
-          response_value?: any;
+          response_value?: unknown;
           created_at?: string;
         };
       };
@@ -64,7 +64,7 @@ export type Database = {
           user_id: string;
           created_at: string;
           expires_at: string;
-          metadata: any;
+          metadata: Record<string, unknown>;
           last_activity: string;
         };
         Insert: {
@@ -72,7 +72,7 @@ export type Database = {
           user_id: string;
           created_at?: string;
           expires_at: string;
-          metadata?: any;
+          metadata?: Record<string, unknown>;
           last_activity?: string;
         };
         Update: {
@@ -80,7 +80,7 @@ export type Database = {
           user_id?: string;
           created_at?: string;
           expires_at?: string;
-          metadata?: any;
+          metadata?: Record<string, unknown>;
           last_activity?: string;
         };
       };
@@ -89,8 +89,8 @@ export type Database = {
   };
 };
 
-// Supabase client type
-type SupabaseClient = ReturnType<typeof createClient<Database>>;
+// Supabase client type with explicit schema
+export type SupabaseClient = ReturnType<typeof createClient<Database>>;
 
 // Define a singleton pool to be reused across requests
 let supabasePool: Pool<SupabaseClient> | null = null;
@@ -102,18 +102,22 @@ function getPool(): Pool<SupabaseClient> {
   // Create factory for Supabase clients
   const factory = {
     create: async (): Promise<SupabaseClient> => {
-      return createClient<Database>(
-        process.env.NEXT_PUBLIC_SUPABASE_URL!,
-        process.env.SUPABASE_SERVICE_ROLE_KEY!,
-        {
-          auth: {
-            persistSession: false,
-          },
-        }
-      );
+      const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+      const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
+
+      if (!url || !key) {
+        throw new Error('Supabase credentials missing. Check environment variables.');
+      }
+
+      return createClient<Database>(url, key, {
+        auth: {
+          persistSession: false,
+        },
+      });
     },
-    destroy: async (client: SupabaseClient): Promise<void> => {
+    destroy: async (_client: SupabaseClient): Promise<void> => {
       // No explicit destruction needed for Supabase client
+      // Using underscore prefix to indicate intentionally unused parameter
     },
   };
 
@@ -154,17 +158,25 @@ export async function withSupabase<T>(
 }
 
 // Create a client for edge functions (no pooling needed)
-export function createEdgeClient() {
-  return createClient<Database>(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-  );
+export function createEdgeClient(): SupabaseClient {
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+  
+  if (!url || !key) {
+    throw new Error('Supabase credentials missing. Check environment variables.');
+  }
+  
+  return createClient<Database>(url, key);
 }
 
 // Create a service client for server-side operations (no pooling)
-export function createServiceClient() {
-  return createClient<Database>(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.SUPABASE_SERVICE_ROLE_KEY!
-  );
+export function createServiceClient(): SupabaseClient {
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  
+  if (!url || !key) {
+    throw new Error('Supabase credentials missing. Check environment variables.');
+  }
+  
+  return createClient<Database>(url, key);
 }

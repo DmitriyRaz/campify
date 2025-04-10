@@ -4,11 +4,16 @@ import { createClient } from '@supabase/supabase-js';
 import { UserProfileService } from '../services/userProfileService';
 
 // Get the user's profile
-export async function GET(request: NextRequest) {
+export async function GET(_request: NextRequest) {
   try {
     // Create supabase client
-    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-    const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+    const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+    if (!supabaseUrl || !supabaseKey) {
+      return NextResponse.json({ error: 'Supabase configuration missing' }, { status: 500 });
+    }
+
     const supabase = createClient(supabaseUrl, supabaseKey);
 
     // Get the current user from the session
@@ -30,9 +35,10 @@ export async function GET(request: NextRequest) {
     }
 
     return NextResponse.json({ profile });
-  } catch (error) {
+  } catch (error: unknown) {
+    const errorMessage = error instanceof Error ? error.message : 'Internal server error';
     console.error('Error getting profile:', error);
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    return NextResponse.json({ error: errorMessage }, { status: 500 });
   }
 }
 
@@ -40,8 +46,13 @@ export async function GET(request: NextRequest) {
 export async function PATCH(request: NextRequest) {
   try {
     // Create supabase client
-    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-    const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+    const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+    if (!supabaseUrl || !supabaseKey) {
+      return NextResponse.json({ error: 'Supabase configuration missing' }, { status: 500 });
+    }
+
     const supabase = createClient(supabaseUrl, supabaseKey);
 
     // Get the current user from the session
@@ -66,8 +77,9 @@ export async function PATCH(request: NextRequest) {
     }
 
     return NextResponse.json({ profile: updatedProfile });
-  } catch (error) {
+  } catch (error: unknown) {
+    const errorMessage = error instanceof Error ? error.message : 'Internal server error';
     console.error('Error updating profile:', error);
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    return NextResponse.json({ error: errorMessage }, { status: 500 });
   }
 }

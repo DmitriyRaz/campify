@@ -51,7 +51,7 @@ export class UserProfileService {
       }
 
       // Cache the result for future requests
-      await setCached(cacheKey, data, this.CACHE_DURATION);
+      await setCached<UserProfile>(cacheKey, data, this.CACHE_DURATION);
 
       return data as UserProfile;
     });
@@ -68,7 +68,15 @@ export class UserProfileService {
     }
 
     // Remove any fields that shouldn't be directly updated
-    const { id, created_at, ...updateData } = profileData as any;
+    const {
+      id: _id,
+      created_at: _created_at,
+      ...updateData
+    } = profileData as {
+      id?: string;
+      created_at?: string;
+      [key: string]: unknown;
+    };
 
     // Add updated_at timestamp
     const dataToUpdate = {
@@ -105,7 +113,7 @@ export class UserProfileService {
     const cachedProfiles = await Promise.all(cachePromises);
 
     // Find which IDs we need to fetch from database
-    const missingIds = userIds.filter((id, index) => !cachedProfiles[index]);
+    const missingIds = userIds.filter((_id, index) => !cachedProfiles[index]);
 
     if (missingIds.length === 0) {
       // All profiles were in cache
@@ -123,7 +131,9 @@ export class UserProfileService {
 
       // Cache each fetched profile
       await Promise.all(
-        data.map((profile) => setCached(this.getCacheKey(profile.id), profile, this.CACHE_DURATION))
+        data.map((profile) =>
+          setCached<UserProfile>(this.getCacheKey(profile.id), profile, this.CACHE_DURATION)
+        )
       );
 
       return data as UserProfile[];
@@ -133,7 +143,7 @@ export class UserProfileService {
     const profileMap = new Map<string, UserProfile>();
 
     // Add cached profiles to the map
-    cachedProfiles.forEach((profile, index) => {
+    cachedProfiles.forEach((profile, _index) => {
       if (profile) {
         profileMap.set(profile.id, profile);
       }

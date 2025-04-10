@@ -33,8 +33,10 @@ export function useProfile() {
 
       setProfile(data.profile);
       return data.profile;
-    } catch (err: any) {
-      setError(err.message || 'An error occurred while fetching profile');
+    } catch (err: unknown) {
+      const errorMessage =
+        err instanceof Error ? err.message : 'An error occurred while fetching profile';
+      setError(errorMessage);
       throw err;
     } finally {
       setLoading(false);
@@ -63,8 +65,10 @@ export function useProfile() {
 
       setProfile(data.profile);
       return data.profile;
-    } catch (err: any) {
-      setError(err.message || 'An error occurred while updating profile');
+    } catch (err: unknown) {
+      const errorMessage =
+        err instanceof Error ? err.message : 'An error occurred while updating profile';
+      setError(errorMessage);
       throw err;
     } finally {
       setLoading(false);

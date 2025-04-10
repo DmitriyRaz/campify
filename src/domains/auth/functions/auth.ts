@@ -17,12 +17,10 @@ export async function POST(request: NextRequest) {
     const result = await AuthService.signUp(signupData);
 
     return NextResponse.json({ user: result.user });
-  } catch (error: any) {
+  } catch (error: unknown) {
+    const errorMessage = error instanceof Error ? error.message : 'An error occurred during signup';
     console.error('Signup error:', error);
-    return NextResponse.json(
-      { error: error.message || 'An error occurred during signup' },
-      { status: 400 }
-    );
+    return NextResponse.json({ error: errorMessage }, { status: 400 });
   }
 }
 
@@ -59,12 +57,10 @@ async function handleSignIn(request: NextRequest) {
       user: result.user,
       session: result.session,
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
+    const errorMessage = error instanceof Error ? error.message : 'Invalid email or password';
     console.error('Signin error:', error);
-    return NextResponse.json(
-      { error: error.message || 'Invalid email or password' },
-      { status: 401 }
-    );
+    return NextResponse.json({ error: errorMessage }, { status: 401 });
   }
 }
 
@@ -77,12 +73,11 @@ async function handleSignOut(request: NextRequest) {
     await AuthService.signOut(sessionId);
 
     return NextResponse.json({ success: true });
-  } catch (error: any) {
+  } catch (error: unknown) {
+    const errorMessage =
+      error instanceof Error ? error.message : 'An error occurred during sign out';
     console.error('Signout error:', error);
-    return NextResponse.json(
-      { error: error.message || 'An error occurred during sign out' },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: errorMessage }, { status: 500 });
   }
 }
 
@@ -101,11 +96,10 @@ async function handleResetPassword(request: NextRequest) {
       success: true,
       message: 'Password reset email sent',
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
+    const errorMessage =
+      error instanceof Error ? error.message : 'An error occurred during password reset';
     console.error('Password reset error:', error);
-    return NextResponse.json(
-      { error: error.message || 'An error occurred during password reset' },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: errorMessage }, { status: 500 });
   }
 }

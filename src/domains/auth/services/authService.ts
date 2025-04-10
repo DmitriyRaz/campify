@@ -13,6 +13,15 @@ export interface LoginData {
   password: string;
 }
 
+// Define a more specific type for user metadata
+export type UserMetadata = {
+  first_name?: string;
+  last_name?: string;
+  display_name?: string;
+  avatar_url?: string;
+  [key: string]: unknown;
+};
+
 export class AuthService {
   // Sign up a new user
   static async signUp(data: SignUpData) {
@@ -60,7 +69,7 @@ export class AuthService {
   }
 
   // Sign out a user
-  static async signOut(sessionId: string) {
+  static async signOut(_sessionId: string) {
     const supabase = createServiceClient();
 
     const { error } = await supabase.auth.signOut();
@@ -74,7 +83,7 @@ export class AuthService {
   }
 
   // Get the current session
-  static async getSession(sessionId: string) {
+  static async getSession(_sessionId: string) {
     const supabase = createServiceClient();
 
     const { data, error } = await supabase.auth.getSession();
@@ -104,7 +113,7 @@ export class AuthService {
   }
 
   // Update user
-  static async updateUser(userId: string, userData: any) {
+  static async updateUser(userId: string, userData: UserMetadata) {
     const supabase = createServiceClient();
 
     const { data, error } = await supabase.auth.updateUser({
